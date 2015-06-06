@@ -24,8 +24,8 @@ var channelsLoaded = 0;
 var channelKeys =[];
 //Change TO: display two fields from the same channel from a Rain gauge - 15min counts, and total counts
 //  src="http://api.thingspeak.com/channels/8652/charts/3?width=1300&height=520&results=1000&dynamic=false&title=15minTotals%20(0.5mm)" ></iframe>
-channelKeys.push({channelNumber:8652, name:'RainGauge',key:'EAEX6922YVUKP3IP',
-   fieldList:[{field:3,axis:'C'},{field:7,axis:'R'}]});
+channelKeys.push({channelNumber:40894, name:'Mensura',key:'7F7QCI37DGJQL6I7',
+   fieldList:[{field:1,axis:'T'}]});
     
 // user's timezone offset
 var myOffset = new Date().getTimezoneOffset();
@@ -192,36 +192,36 @@ $(document).ready(function()
 			buttons: [{
 				count: 30,
 				type: 'minute',
-				text: '30M'
+				text: '30m'
 			}, {
 				count: 12,
 				type: 'hour',
-				text: '12H'
+				text: '12h'
       }, {
 				count: 1,
 				type: 'day',
-				text: 'D'
+				text: 'Dia'
       }, {
 				count: 1,
 				type: 'week',
-				text: 'W'
+				text: 'Semana'
       }, {
 				count: 1,
 				type: 'month',
-				text: 'M'
+				text: 'Mes'
       }, {
 				count: 1,
 				type: 'year',
-				text: 'Y'
+				text: 'Ano'
 			}, {
 				type: 'all',
-				text: 'All'
+				text: 'Todos'
 			}],
 			inputEnabled: true,
-			selected: 4  //Change to 4th button as default
+			selected: 1  //Change to 4th button as default
 		},
     title: {
-			text: ''
+			text: 'Mensura'
 		},
 		plotOptions: {
 		  line: {
@@ -235,7 +235,7 @@ $(document).ready(function()
 			},
 			series: {
 			  marker: {
-				  radius: 2
+				  radius: 1
 				},
 				animation: true,
 				step: false,
@@ -245,7 +245,7 @@ $(document).ready(function()
 		},
     tooltip: {
       valueDecimals: 1,
-      valueSuffix: '(0.01")',
+      valueSuffix: '(ºC")',
       xDateFormat:'%Y-%m-%d<br/>%H:%M:%S %p' //bug fix
 
 
@@ -270,16 +270,10 @@ $(document).ready(function()
 		},
 		yAxis: [{
             title: {
-                text: 'RainGauge Total (0.01")'
+                text: 'Temperatura (ºC)'
             },
-            id: 'R'
-    }, {
-            title: {
-                text: '15min counts (0.01")'
-            },
-            opposite: true,
-            id: 'C'
-    }],
+            id: 'T'
+    }, ],
 		exporting: {
 		  enabled: true,
       csv: {
@@ -314,7 +308,7 @@ $(document).ready(function()
   }
 	// set chart labels here so that decoding occurs properly
 	//chartOptions.title.text = data.channel.name;
-	chartOptions.xAxis.title.text = 'Date';
+	chartOptions.xAxis.title.text = 'Data';
 
 	// draw the chart
   dynamicChart = new Highcharts.StockChart(chartOptions);
@@ -411,20 +405,14 @@ function loadChannelHistory(sentChannelIndex,channelNumber,key,sentFieldList,sen
 }
 
   </script>
-  	<title>Rain Gauge - rain intentsity - experimental</title>    
+  	<title>Mensura - Log de temperatura</title>    
 
   </head>
   <body style="                      background-color: white;">
     <div id="chart-container" style="height: 600px;"><br>
-      Highstock Chart Here<br>
+      Gráfico de temperatura da Mensura<br>
     </div>
-    <div id="below chart"> <button style="width: 89px; margin-top: -18px;" value="Hide All"
-        name="Hide All Button"
-        onclick="HideAll();">Hide
-        All</button><button style="width: 162px; margin-top: -18px;" value="Load More Data"
-        name="Load More Data"
-        onclick="loadOneChannel();">Load
-        More Historical Data </button>
+    <div id="below chart"> 
       <select id="Channel Select">
       </select>
       <select id="Loads">
